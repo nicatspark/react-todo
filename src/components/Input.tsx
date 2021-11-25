@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { Todo } from '../App'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 export const Input = ({ todos, setTodos }: Props): JSX.Element => {
   const todoNameRef = useRef<HTMLInputElement | null>(null)
 
-  function handleAddTodo() {
+  const handleAddTodo = useCallback(() => {
     const inputTodo = todoNameRef.current?.value.trim()
     if (inputTodo === '') return
     const idArray = todos.map((todo) => todo.id)
@@ -25,7 +25,7 @@ export const Input = ({ todos, setTodos }: Props): JSX.Element => {
     } as Todo
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
-  }
+  }, [todos, setTodos])
 
   return (
     <>

@@ -19,7 +19,7 @@ const TodoList = ({ todos, setTodos }: Props): JSX.Element => {
 
   return (
     <>
-      <ul>
+      <ol>
         {todos.map((todo) => (
           <li
             className={todo.completed ? 'done' : undefined}
@@ -29,7 +29,7 @@ const TodoList = ({ todos, setTodos }: Props): JSX.Element => {
             {todo.title}
           </li>
         ))}
-      </ul>
+      </ol>
     </>
   )
 }
