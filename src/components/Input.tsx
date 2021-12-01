@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Todo } from '../App'
 
 interface Props {
@@ -7,11 +7,27 @@ interface Props {
 }
 
 export const Input = ({ todos, setTodos }: Props): JSX.Element => {
+  const [highlightUserError, setHighlightUserError] = useState(false)
   const todoNameRef = useRef<HTMLInputElement | null>(null)
 
+  console.log('highlightUserError: ', highlightUserError)
+  
+  const handleOnChange = (e: React.SyntheticEvent) => {
+    const el = e.target as HTMLInputElement
+    const inputValue = el.value.trim()
+    if (inputValue === '') return
+    setHighlightUserError(false)
+  }
+  
   const handleAddTodo = useCallback(() => {
-    const inputTodo = todoNameRef.current?.value.trim()
-    if (inputTodo === '') return
+    if (!todoNameRef.current) return
+    const inputValue = todoNameRef.current.value.trim()
+    if (inputValue === '') {
+      setHighlightUserError(true)
+      setTimeout(() => setHighlightUserError(false), 3000)
+      console.log('You can not submit an empty string')
+      return
+    } 
     const idArray = todos.map((todo) => todo.id)
     const nextId =
       idArray.reduce((previousValue, currentValue) =>
@@ -20,16 +36,17 @@ export const Input = ({ todos, setTodos }: Props): JSX.Element => {
     const newTodo = {
       userId: 1,
       id: nextId,
-      title: inputTodo,
+      title: inputValue,
       completed: false,
     } as Todo
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
-  }, [todos, setTodos])
+    todoNameRef.current.value = ''
+  }, [setTodos, todos])
 
   return (
     <>
-      <input ref={todoNameRef} type='text' />
+      <input ref={todoNameRef} type='text' className={highlightUserError?'error':''} onChange={handleOnChange} />
       <button onClick={handleAddTodo}>+</button>
     </>
   )
