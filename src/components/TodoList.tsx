@@ -3,19 +3,10 @@ import { Todo } from '../App'
 
 interface Props {
   todos: Todo[]
-  setTodos: React.Dispatch<Todo[]>
+  handleTodoClick: (e: React.SyntheticEvent, id: number) => void
 }
 
-const TodoList = ({ todos, setTodos }: Props): JSX.Element => {
-  const toggleTodo = (toggleId: number) => {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === toggleId) {
-        todo.completed = !todo.completed
-      }
-      return todo
-    })
-    setTodos(updatedTodos)
-  }
+const TodoList = ({ todos, handleTodoClick }: Props): JSX.Element => {
 
   return (
     <>
@@ -24,9 +15,12 @@ const TodoList = ({ todos, setTodos }: Props): JSX.Element => {
           <li
             className={todo.completed ? 'done' : undefined}
             key={todo.id}
-            onClick={() => toggleTodo(todo.id)}
+            onClick={(e) => handleTodoClick(e, todo.id)}
           >
             {todo.title}
+            <span className="remove-todo" >
+              X
+            </span>
           </li>
         ))}
       </ol>

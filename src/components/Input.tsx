@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Todo } from '../App'
+import cn from 'clsx'
 
 interface Props {
   todos: Todo[]
@@ -29,8 +30,9 @@ export const Input = ({ todos, setTodos }: Props): JSX.Element => {
       return
     } 
     const idArray = todos.map((todo) => todo.id)
-    const nextId =
-      idArray.reduce((previousValue, currentValue) =>
+    const nextId = idArray.length===0 
+      ? 1
+      : idArray.reduce((previousValue, currentValue) =>
         Math.max(previousValue, currentValue)
       ) + 1
     const newTodo = {
@@ -44,9 +46,17 @@ export const Input = ({ todos, setTodos }: Props): JSX.Element => {
     todoNameRef.current.value = ''
   }, [setTodos, todos])
 
+  
+  const handleOnKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter")
+      handleAddTodo()
+  }
+
+  const inputClasses = cn({ highlightUserError: 'error' })
+
   return (
     <>
-      <input ref={todoNameRef} type='text' className={highlightUserError?'error':''} onChange={handleOnChange} />
+      <input ref={todoNameRef} type='text' className={inputClasses} onKeyUp={handleOnKeyUp} onChange={handleOnChange} />
       <button onClick={handleAddTodo}>+</button>
     </>
   )

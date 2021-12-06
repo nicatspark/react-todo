@@ -35,9 +35,32 @@ const initialState = [
 const App = () => {
   const [todos, setTodos] = useState(initialState)
 
+  const handleTodoClick = (e: React.SyntheticEvent, todoId: number) => {
+    const el = e.target as HTMLElement
+    const clickedOnTheRemoveBtn = !!el.closest('.remove-todo')
+    const action = clickedOnTheRemoveBtn ? removeTodo:toggleTodo
+    action(todoId)
+    
+    function toggleTodo(todoId: number){
+      const updatedTodos = todos.map((todo) => {
+        if (todo.id === todoId) {
+          todo.completed = !todo.completed
+        }
+        return todo
+      })
+      setTodos(updatedTodos)
+    }
+
+    function removeTodo(todoId: number){
+      console.log(todoId)
+      const updatedTodos = todos.filter((todo) => todo.id !== todoId)
+      setTodos(updatedTodos)
+    }
+  }
+
   return (
     <div className='App'>
-      <TodoList todos={todos} setTodos={setTodos} />
+      <TodoList todos={todos} handleTodoClick={handleTodoClick} />
       <Input todos={todos} setTodos={setTodos} />
     </div>
   )

@@ -16,11 +16,14 @@ code {
 ol {
   margin-bottom: 2rem;
   padding-left: 1rem;
+  max-width: 300px;
 }
 
 li {
   position: relative;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 
 li.done {
@@ -37,4 +40,9 @@ li.done::after {
 
 input.error {
   border: solid 2px red;
+}
+
+.remove-todo {
+  color: blue;
+  border: solid 1px;
 }
