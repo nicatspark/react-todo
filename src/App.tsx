@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TodoList from './components/TodoList'
 import { Input } from './components/Input'
 
@@ -34,6 +34,12 @@ const initialState = [
 
 const App = () => {
   const [todos, setTodos] = useState(initialState)
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(response => response.json())
+    .then(json => setTodos(json.filter((_todo: Todo, index: number) => index < 10 )))
+  }, [])
 
   const handleTodoClick = (e: React.SyntheticEvent, todoId: number) => {
     const el = e.target as HTMLElement
