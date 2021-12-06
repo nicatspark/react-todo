@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import TodoList from './components/TodoList'
 import { Input } from './components/Input'
+import getTodos from './api/api'
 
 export interface Todo {
   userId: number
@@ -36,9 +37,14 @@ const App = () => {
   const [todos, setTodos] = useState(initialState)
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
+    async function doStuff() {
+      const listStuff = await getTodos()
+      setTodos(listStuff);
+    }
+    doStuff()
+/*     fetch('https://jsonplaceholder.typicode.com/todos')
     .then(response => response.json())
-    .then(json => setTodos(json.filter((_todo: Todo, index: number) => index < 10 )))
+    .then(json => setTodos(json.filter((_todo: Todo, index: number) => index < 10 ))) */
   }, [])
 
   const handleTodoClick = (e: React.SyntheticEvent, todoId: number) => {

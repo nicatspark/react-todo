@@ -26,23 +26,25 @@ li {
   justify-content: space-between;
 }
 
-li.done {
+li.done span:first-child {
   color: #aaa;
+  text-decoration: line-through;
 }
-li.done::after {
+/* li.done::after {
   content: '';
   position: absolute;
   left: 0;
   top: 0.6em;
   border-top: 1px solid white;
-  width: 100%;
-}
+} */
 
 input.error {
-  border: solid 2px red;
+  /*   outline: solid 2px red; */
+  box-shadow: 0 0 0 5px white, 0 0 0 6px red;
 }
 
 .remove-todo {
   color: blue;
   border: solid 1px;
+  text-decoration: none;
 }

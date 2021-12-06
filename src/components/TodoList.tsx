@@ -17,7 +17,9 @@ const TodoList = ({ todos, handleTodoClick }: Props): JSX.Element => {
             key={todo.id}
             onClick={(e) => handleTodoClick(e, todo.id)}
           >
+            <span>
             {todo.title}
+            </span>
             <span className="remove-todo" >
               X
             </span>

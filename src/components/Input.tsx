@@ -52,7 +52,7 @@ export const Input = ({ todos, setTodos }: Props): JSX.Element => {
       handleAddTodo()
   }
 
-  const inputClasses = cn({ highlightUserError: 'error' })
+  const inputClasses = cn({ 'error': highlightUserError  })
 
   return (
     <>
